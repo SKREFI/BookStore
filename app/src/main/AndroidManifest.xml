@@ -16,6 +16,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".EditorActivity"></activity>
+
+        <provider
+            android:name=".data.BookProvider"
+            android:authorities="com.android.pets"
+            android:exported="false" />
     </application>
 
 </manifest>

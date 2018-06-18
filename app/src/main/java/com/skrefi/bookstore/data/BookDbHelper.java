@@ -2,6 +2,7 @@ package com.skrefi.bookstore.data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 
 import static com.skrefi.bookstore.data.BookContract.BookEntry.COLUMN_BOOK_NAME;
 import static com.skrefi.bookstore.data.BookContract.BookEntry.COLUMN_BOOK_PHONE;
@@ -11,7 +12,7 @@ import static com.skrefi.bookstore.data.BookContract.BookEntry.COLUMN_BOOK_SUPPL
 import static com.skrefi.bookstore.data.BookContract.BookEntry.TABLE_NAME;
 import static com.skrefi.bookstore.data.BookContract.BookEntry._ID;
 
-public class BookDbHelper extends SQLiteDatabase {
+public class BookDbHelper extends SQLiteOpenHelper {
 
     public static final String LOG_TAG = BookDbHelper.class.getSimpleName();
     private static final String DATABASE_NAME = "books.db";
@@ -35,9 +36,10 @@ public class BookDbHelper extends SQLiteDatabase {
         db.execSQL(SQL_CREATE_BOOKS_TABLE);
     }
 
+    //This is called when the database needs to be upgraded.
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
-
+        // The database is still at version 1, so there's nothing to do be done here.
     }
 
 }
