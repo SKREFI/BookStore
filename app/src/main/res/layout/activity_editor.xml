@@ -8,10 +8,10 @@
     tools:context=".EditorActivity">
 
     <LinearLayout
-        android:paddingTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingTop="16dp">
 
         <TextView
             style="@style/CategoryStyle"
@@ -25,10 +25,10 @@
     </LinearLayout>
 
     <LinearLayout
-        android:paddingTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingTop="16dp">
 
         <TextView
             style="@style/CategoryStyle"
@@ -42,14 +42,14 @@
     </LinearLayout>
 
     <LinearLayout
-        android:paddingTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingTop="16dp">
 
         <TextView
             style="@style/CategoryStyle"
-            android:text="Qunatity:" />
+            android:text="Quantity:" />
 
         <EditText
             android:id="@+id/edit_book_qunatity"
@@ -59,10 +59,10 @@
     </LinearLayout>
 
     <LinearLayout
-        android:paddingTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingTop="16dp">
 
         <TextView
             style="@style/CategoryStyle"
@@ -76,10 +76,10 @@
     </LinearLayout>
 
     <LinearLayout
-        android:paddingTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingTop="16dp">
 
         <TextView
             style="@style/CategoryStyle"
