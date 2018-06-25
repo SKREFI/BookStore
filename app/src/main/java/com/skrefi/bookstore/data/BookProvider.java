@@ -47,7 +47,8 @@ public class BookProvider extends ContentProvider {
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
-        Cursor cursor = null;
+        Cursor cursor;
+        //Cursor cursor = null;
 
         int match = sUriMatcher.match(uri);
 
