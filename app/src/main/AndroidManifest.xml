@@ -20,7 +20,7 @@
 
         <provider
             android:name=".data.BookProvider"
-            android:authorities="com.android.pets"
+            android:authorities="com.android.books"
             android:exported="false" />
     </application>
 
