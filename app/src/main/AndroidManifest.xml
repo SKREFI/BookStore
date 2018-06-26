@@ -20,7 +20,7 @@
 
         <provider
             android:name=".data.BookProvider"
-            android:authorities="com.android.bookstore"
+            android:authorities="com.skrefi.bookstore"
             android:exported="false" />
     </application>
 
