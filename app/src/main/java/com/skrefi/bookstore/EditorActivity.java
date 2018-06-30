@@ -145,14 +145,16 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                     Toast.makeText(this, getString(R.string.save_error), Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(this, getString(R.string.save_done), Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             } else {
                 int rowsAffected = getContentResolver().update(mCurrentBookUri, values, null, null);
 
                 if (rowsAffected == 0) {
-                    Toast.makeText(this, getString(R.string.update_done), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.update_error), Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(this, getString(R.string.update_done), Toast.LENGTH_SHORT).show();
+                    finish();
                 }
                 finish();
             }
