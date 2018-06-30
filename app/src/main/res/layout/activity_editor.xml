@@ -78,12 +78,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="16dp">
+        android:layout_marginLeft="32dp"
+        android:orientation="horizontal">
 
         <TextView
             style="@style/CategoryStyle"
-            android:text="Phone Number:" />
+            android:text="Supplier Phone:" />
 
         <EditText
             android:id="@+id/edit_book_phone"

@@ -4,11 +4,14 @@ import android.content.ContentResolver;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
+import static android.provider.BaseColumns._ID;
+
 public final class BookContract {
 
     public static final String CONTENT_AUTHORITY = "com.skrefi.bookstore";
     public static final String PATH_BOOKS = "books";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
+    public final static String COLUMN_KEY = _ID;
 
     private BookContract(){}
 

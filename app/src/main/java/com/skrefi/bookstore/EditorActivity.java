@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -37,6 +38,12 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     private EditText mQuantityEditText;
     private EditText mSupplierEditText;
     private EditText mPhoneEditText;
+
+    private String name;
+    private String price;
+    private String quantity;
+    private String supplier;
+    private String phone;
 
     private boolean mBookHasChanged = false;
 
@@ -73,36 +80,81 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     }
 
     private void saveBook() {
-        /** Comprimed in the content values
-        String nameString = mNameEditText.getText().toString().trim();
-        String priceString = mPriceEditText.getText().toString().trim();
-        String quantityString = mQuantityEditText.getText().toString().trim();
-        String supplierString = mSupplierEditText.getText().toString().trim();
-        String phoneString = mPhoneEditText.getText().toString().trim();
-         */
-
         ContentValues values = new ContentValues();
+
+        name = mNameEditText.getText().toString().trim();
+        price = mPriceEditText.getText().toString().trim();
+        quantity = mQuantityEditText.getText().toString().trim();
+        supplier = mSupplierEditText.getText().toString().trim();
+        phone = mPhoneEditText.getText().toString().trim();
+
         values.put(COLUMN_BOOK_NAME, mNameEditText.getText().toString().trim());
         values.put(COLUMN_BOOK_PRICE, mPriceEditText.getText().toString().trim());
         values.put(COLUMN_BOOK_QUANTITY, mQuantityEditText.getText().toString().trim());
         values.put(COLUMN_BOOK_SUPPLIER, mSupplierEditText.getText().toString().trim());
         values.put(COLUMN_BOOK_PHONE, mPhoneEditText.getText().toString().trim());
 
-        if (mCurrentBookUri == null) {
-            Uri newUri = getContentResolver().insert(BookContract.BookEntry.CONTENT_URI, values);
-
-            if (newUri == null) {
-                Toast.makeText(this, "Error with saving book", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "Book Saved", Toast.LENGTH_SHORT).show();
-            }
+        if (mCurrentBookUri == null &&
+                TextUtils.isEmpty(mNameEditText.getText().toString().trim()) &&
+                TextUtils.isEmpty(mPriceEditText.getText().toString().trim()) &&
+                TextUtils.isEmpty(mQuantityEditText.getText().toString().trim()) &&
+                TextUtils.isEmpty(mSupplierEditText.getText().toString().trim()) &&
+                TextUtils.isEmpty(mPhoneEditText.getText().toString().trim())) {
+            finish();
         } else {
-            int rowsAffected = getContentResolver().update(mCurrentBookUri, values, null, null);
 
-            if (rowsAffected == 0) {
-                Toast.makeText(this, "Error with updating book", Toast.LENGTH_SHORT).show();
+            if (!TextUtils.isEmpty(name)) {
+                values.put(COLUMN_BOOK_NAME, name);
             } else {
-                Toast.makeText(this, "Book updated", Toast.LENGTH_SHORT).show();
+                displayError();
+                return;
+            }
+
+            if (!TextUtils.isEmpty(price)) {
+                values.put(COLUMN_BOOK_PRICE, price);
+            } else {
+                displayError();
+                return;
+            }
+
+            if (!TextUtils.isEmpty(quantity)) {
+                values.put(COLUMN_BOOK_QUANTITY, quantity);
+            } else {
+                displayError();
+                return;
+            }
+
+            if (!TextUtils.isEmpty(supplier)) {
+                values.put(COLUMN_BOOK_SUPPLIER, supplier);
+            } else {
+                displayError();
+                return;
+            }
+
+            if (!TextUtils.isEmpty(phone)) {
+                values.put(COLUMN_BOOK_PHONE, phone);
+            } else {
+                displayError();
+                return;
+            }
+
+            if (mCurrentBookUri == null) {
+                Uri newUri = getContentResolver().insert(BookContract.BookEntry.CONTENT_URI, values);
+
+                if (newUri == null) {
+                    Toast.makeText(this, getString(R.string.save_error), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, getString(R.string.save_done), Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                int rowsAffected = getContentResolver().update(mCurrentBookUri, values, null, null);
+
+                if (rowsAffected == 0) {
+                    Toast.makeText(this, getString(R.string.update_done), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, getString(R.string.update_done), Toast.LENGTH_SHORT).show();
+                }
+                finish();
             }
         }
     }
@@ -154,8 +206,8 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     }
 
     @Override
-    public void onBackPressed(){
-        if(!mBookHasChanged){
+    public void onBackPressed() {
+        if (!mBookHasChanged) {
             super.onBackPressed();
             return;
         }
@@ -170,7 +222,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
         showUnsavedChangesDialog(discardButtonClickListener);
     }
-
 
 
     @Override
@@ -194,26 +245,11 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-        if(cursor == null || cursor.getCount() < 1){
+        if (cursor == null || cursor.getCount() < 1) {
             return;
         }
 
-        if(cursor.moveToFirst()){
-            /** I comprimed all when I set the text for the edit text
-
-            int nameColumnIndex = cursor.getColumnIndex(COLUMN_BOOK_NAME);
-            int priceColumnIndex = cursor.getColumnIndex(COLUMN_BOOK_PRICE);
-            int qunatityColumnIndex = cursor.getColumnIndex(COLUMN_BOOK_QUANTITY);
-            int supplierColumnIndex = cursor.getColumnIndex(COLUMN_BOOK_SUPPLIER);
-            int phoneColumnIndex = cursor.getColumnIndex(COLUMN_BOOK_PHONE);
-
-            String name = cursor.getString(nameColumnIndex);
-            String price = cursor.getString(priceColumnIndex);
-            String quantity = cursor.getString(qunatityColumnIndex);
-            String supplier = cursor.getString(supplierColumnIndex);
-            String phone = cursor.getString(phoneColumnIndex);
-             */
-
+        if (cursor.moveToFirst()) {
             mNameEditText.setText(cursor.getString(cursor.getColumnIndex(COLUMN_BOOK_NAME)));
             mPriceEditText.setText(cursor.getString(cursor.getColumnIndex(COLUMN_BOOK_PRICE)));
             mQuantityEditText.setText(cursor.getString(cursor.getColumnIndex(COLUMN_BOOK_QUANTITY)));
@@ -231,14 +267,14 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         mPhoneEditText.setText("");
     }
 
-    private void showUnsavedChangesDialog(DialogInterface.OnClickListener discardButtonClickListener){
+    private void showUnsavedChangesDialog(DialogInterface.OnClickListener discardButtonClickListener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Discard your changes and quit editing?");
-        builder.setPositiveButton("Discard",discardButtonClickListener);
-        builder.setNegativeButton("Keep Editing", new DialogInterface.OnClickListener() {
+        builder.setMessage(getString(R.string.discard_changes));
+        builder.setPositiveButton(getString(R.string.dc_yes), discardButtonClickListener);
+        builder.setNegativeButton(getString(R.string.dc_no), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
-                if(dialog != null){
+                if (dialog != null) {
                     dialog.dismiss();
                 }
             }
@@ -248,19 +284,19 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         alertDialog.show();
     }
 
-    private void showDeleteConfirmationDialog(){
+    private void showDeleteConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Delete this book?");
-        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+        builder.setMessage(getString(R.string.book_delete_dialog));
+        builder.setPositiveButton(getString(R.string.bdd_yes), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 deleteBook();
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.bdd_no), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if(dialog != null){
+                if (dialog != null) {
                     dialog.dismiss();
                 }
             }
@@ -270,14 +306,41 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         alertDialog.show();
     }
 
-    private void deleteBook(){
-        if(mCurrentBookUri != null){
+    private void displayError() {
+        if (TextUtils.isEmpty(mNameEditText.getText().toString().trim())) {
+            mNameEditText.requestFocus();
+            mNameEditText.setError("Book name is required!");
+        }
+
+        if (TextUtils.isEmpty(mPriceEditText.getText().toString().trim())) {
+            mPriceEditText.requestFocus();
+            mPriceEditText.setError("Book requires a price!");
+        }
+
+        if (TextUtils.isEmpty(mQuantityEditText.getText().toString().trim())) {
+            mQuantityEditText.requestFocus();
+            mQuantityEditText.setError("Please input the quantity!");
+        }
+
+        if (TextUtils.isEmpty(mSupplierEditText.getText().toString().trim())) {
+            mSupplierEditText.requestFocus();
+            mSupplierEditText.setError("Please input the the supplier name!");
+        }
+
+        if (TextUtils.isEmpty(mPhoneEditText.getText().toString().trim())) {
+            mPhoneEditText.requestFocus();
+            mPhoneEditText.setError("Please input the supplier's phone!");
+        }
+    }
+
+    private void deleteBook() {
+        if (mCurrentBookUri != null) {
             int rowsDeleted = getContentResolver().delete(mCurrentBookUri, null, null);
 
-            if(rowsDeleted == 0){
-                Toast.makeText(this,"Error with dealeting book",Toast.LENGTH_SHORT).show();
-            }else{
-                Toast.makeText(this,"Book deleted",Toast.LENGTH_SHORT).show();
+            if (rowsDeleted == 0) {
+                Toast.makeText(this, getString(R.string.delete_error), Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, getString(R.string.delete_done), Toast.LENGTH_SHORT).show();
             }
         }
         finish();

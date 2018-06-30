@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">Book Store</string>
+
+    <string name="save_error">Error with saving book</string>
+    <string name="save_done">Book Saved</string>
+    <string name="update_error">Error with updating book</string>
+    <string name="update_done">Book updated</string>
+    <string name="delete_error">Error with deleting book</string>
+    <string name="delete_done">Book deleted</string>
+
+    <string name="discard_changes">Discard your changes and quit editing?</string>
+        <string name="dc_yes">Discard</string>
+        <string name="dc_no">Keep Editing</string>
+
+    <string name="book_delete_dialog">Delete this book?</string>
+        <string name="bdd_yes">Delete</string>
+        <string name="bdd_no">Cancel</string>
+
+    <string name="invalid_price">The book\'s price is invalid</string>
 </resources>

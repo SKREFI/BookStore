@@ -95,9 +95,6 @@ public class BookProvider extends ContentProvider {
     }
 
     private Uri insertBook(Uri uri, ContentValues values) {
-        /**
-         *  Check if the data is valid
-         */
         String name = values.getAsString(COLUMN_BOOK_NAME);
         if (name == null) throw new IllegalArgumentException("Book requires a name");
 
