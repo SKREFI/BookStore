@@ -14,8 +14,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import static com.skrefi.bookstore.data.BookContract.BookEntry.COLUMN_BOOK_NAME;
+import static com.skrefi.bookstore.data.BookContract.BookEntry.COLUMN_BOOK_PHONE;
 import static com.skrefi.bookstore.data.BookContract.BookEntry.COLUMN_BOOK_PRICE;
 import static com.skrefi.bookstore.data.BookContract.BookEntry.COLUMN_BOOK_QUANTITY;
+import static com.skrefi.bookstore.data.BookContract.BookEntry.COLUMN_BOOK_SUPPLIER;
 import static com.skrefi.bookstore.data.BookContract.BookEntry.CONTENT_URI;
 import static com.skrefi.bookstore.data.BookContract.COLUMN_KEY;
 
@@ -41,17 +43,28 @@ public class BookCursorAdapter extends CursorAdapter {
         tvPrice.setText("$" + cursor.getString(cursor.getColumnIndex(COLUMN_BOOK_PRICE)));
         tvQuantity.setText(cursor.getString(cursor.getColumnIndex(COLUMN_BOOK_QUANTITY)));
 
+        //So I am able to use them in the sell btn listener
+        //final String name = cursor.getString(cursor.getColumnIndex(COLUMN_BOOK_NAME));
+        //final String price = cursor.getString(cursor.getColumnIndex(COLUMN_BOOK_PRICE));
+        //final String supplier = cursor.getString(cursor.getColumnIndex(COLUMN_BOOK_SUPPLIER));
+        //final String phone = cursor.getString(cursor.getColumnIndex(COLUMN_BOOK_PHONE));
+
         final int quantity = cursor.getInt(cursor.getColumnIndex(COLUMN_BOOK_QUANTITY));
         final int bookId = cursor.getInt(cursor.getColumnIndex(COLUMN_KEY));
 
         ivSellBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (quantity > 0) {
                     int newQuantity = quantity - 1;
                     Uri quantityUri = ContentUris.withAppendedId(CONTENT_URI, bookId);
                     ContentValues values = new ContentValues();
                     values.put(COLUMN_BOOK_QUANTITY, newQuantity);
+                    //values.put(COLUMN_BOOK_NAME,name);
+                    //values.put(COLUMN_BOOK_PRICE,price);
+                    //values.put(COLUMN_BOOK_SUPPLIER,supplier);
+                    //values.put(COLUMN_BOOK_PHONE,phone);
 
                     int rowUpdated = context.getContentResolver().update(quantityUri, values, null, null);
                     if (!(rowUpdated > 0)) {

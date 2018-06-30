@@ -181,7 +181,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         switch (item.getItemId()) {
             case R.id.action_save:
                 saveBook();
-                finish();
+                //finish();
                 return true;
             case R.id.action_delete:
                 showDeleteConfirmationDialog();
